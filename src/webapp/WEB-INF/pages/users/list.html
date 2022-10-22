@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<main>
+    <div>
+        <h2>List Users</h2>
+        <th:block th:each="user : ${list}">
+            <h1 th:text="${user}"></h1>
+        </th:block>
+    </div>
+    <div>
+        <h2><a href="/users/create">Create new User</a></h2>
+        <h2><a href="/users/update">Update User</a></h2>
+        <h2><a href="/users/delete">Delete User</a></h2>
+    </div>
+</main>
+</body>
+</html>
