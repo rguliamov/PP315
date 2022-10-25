@@ -7,10 +7,15 @@
 </head>
 <body>
 <main>
-    <h1>Create user</h1>
+    <h1>Update user</h1>
     <form th:object="${user}"
-          th:action="@{/users/create}"
+          th:action="@{/templates/users/update}"
           method="post">
+        <div>
+            <label for="id">Id</label>
+            <input id="id" type="number"
+                   th:field="*{id}">
+        </div>
         <div>
             <label for="firstName">First Name</label>
             <input id="firstName" type="text"
@@ -31,7 +36,7 @@
             <input id="phone" type="text"
                    th:field="*{phone}">
         </div>
-        <button type="submit">Create User</button>
+        <button type="submit">Update User</button>
     </form>
 </main>
 </body>

@@ -1,4 +1,4 @@
-package com.github.rguliamov.model;
+package com.github.rguliamov.PP223.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

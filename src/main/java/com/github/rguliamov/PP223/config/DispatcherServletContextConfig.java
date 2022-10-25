@@ -1,4 +1,4 @@
-package com.github.rguliamov.config;
+package com.github.rguliamov.PP223.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -15,7 +15,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.github.rguliamov.presentation")
+@ComponentScan(basePackages = "com.github.rguliamov.PP223.presentation.controller")
 public class DispatcherServletContextConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -25,7 +25,7 @@ public class DispatcherServletContextConfig implements WebMvcConfigurer {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/WEB-INF/pages/");
+        templateResolver.setPrefix("classpath:/templates/");
         templateResolver.setSuffix(".html");
         return templateResolver;
     }

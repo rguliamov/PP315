@@ -1,15 +1,12 @@
-package com.github.rguliamov.presentation.controller;
+package com.github.rguliamov.PP223.presentation.controller;
 
-import com.github.rguliamov.model.User;
-import com.github.rguliamov.service.UserService;
+import com.github.rguliamov.PP223.model.User;
+import com.github.rguliamov.PP223.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author Guliamov Rustam

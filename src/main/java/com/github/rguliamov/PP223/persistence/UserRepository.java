@@ -1,6 +1,6 @@
-package com.github.rguliamov.persistence;
+package com.github.rguliamov.PP223.persistence;
 
-import com.github.rguliamov.model.User;
+import com.github.rguliamov.PP223.model.User;
 
 import java.util.List;
 

@@ -1,13 +1,12 @@
-package com.github.rguliamov.persistence.impl;
+package com.github.rguliamov.PP223.persistence.impl;
 
-import com.github.rguliamov.model.User;
-import com.github.rguliamov.persistence.UserRepository;
+import com.github.rguliamov.PP223.model.User;
+import com.github.rguliamov.PP223.persistence.UserRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

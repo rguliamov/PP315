@@ -1,4 +1,4 @@
-package com.github.rguliamov.presentation.controller;
+package com.github.rguliamov.PP223.presentation.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
