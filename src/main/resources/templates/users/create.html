@@ -9,29 +9,32 @@
 <main>
     <h1>Create user</h1>
     <form th:object="${user}"
-          th:action="@{/templates/users/create}"
+          th:action="@{/users/create}"
           method="post">
-        <div>
-            <label for="firstName">First Name</label>
-            <input id="firstName" type="text"
-                   th:field="*{firstName}">
-        </div>
-        <div>
-            <label for="lastName">Last Name</label>
-            <input id="lastName" type="text"
-                   th:field="*{lastName}">
-        </div>
-        <div>
-            <label for="age">Age</label>
-            <input id="age" type="number"
-                   th:field="*{age}" min="0" max="120">
-        </div>
-        <div>
-            <label for="phone">Phone</label>
-            <input id="phone" type="text"
-                   th:field="*{phone}">
-        </div>
-        <button type="submit">Create User</button>
+        <fieldset>
+            <legend>create user</legend>
+            <div>
+                <label for="firstName">First Name</label>
+                <input id="firstName" type="text"
+                       th:field="*{firstName}">
+            </div>
+            <div>
+                <label for="lastName">Last Name</label>
+                <input id="lastName" type="text"
+                       th:field="*{lastName}">
+            </div>
+            <div>
+                <label for="age">Age</label>
+                <input id="age" type="number"
+                       th:field="*{age}" min="0" max="120">
+            </div>
+            <div>
+                <label for="phone">Phone</label>
+                <input id="phone" type="text"
+                       th:field="*{phone}">
+            </div>
+            <button type="submit">Create User</button>
+        </fieldset>
     </form>
 </main>
 </body>

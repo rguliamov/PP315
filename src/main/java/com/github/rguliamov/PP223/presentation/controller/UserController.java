@@ -68,5 +68,5 @@ public class UserController {
         userService.delete(user.getId());
 
         return "redirect:/users/list";
-    }
+    }   
 }

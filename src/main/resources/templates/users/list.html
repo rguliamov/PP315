@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
@@ -9,13 +9,13 @@
     <div>
         <h2>List Users</h2>
         <th:block th:each="user : ${list}">
-            <h1 th:text="${user}"></h1>
+            <h3 th:text="${user}"></h3>
         </th:block>
     </div>
     <div>
-        <h2><a href="/templates/users/create">Создать пользователя</a></h2>
-        <h2><a href="/templates/users/update">Update User</a></h2>
-        <h2><a href="/templates/users/delete">Delete User</a></h2>
+        <h2><a href="/users/create">Создать пользователя</a></h2>
+        <h2><a href="/users/update">Update User</a></h2>
+        <h2><a href="/users/delete">Delete User</a></h2>
     </div>
 </main>
 </body>
