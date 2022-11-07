@@ -22,13 +22,11 @@ public class UserRepositoryImpl implements UserRepository {
     private EntityManager entityManager;
 
     @Override
-    @Transactional
     public void save(User user) {
         entityManager.persist(user);
     }
 
     @Override
-    @Transactional
     public void update(User user) {
         Query query = entityManager.createQuery("update User set firstName = :fname, lastName = :sname," +
                 "age = :age, phone = :phone where id = :i");
@@ -43,7 +41,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    @Transactional
     public void delete(long id) {
         Query query = entityManager.createQuery("delete from User u where u.id = ?1");
         query.setParameter(1, id);

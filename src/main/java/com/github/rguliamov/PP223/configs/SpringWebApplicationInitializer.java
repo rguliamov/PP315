@@ -1,4 +1,4 @@
-package com.github.rguliamov.PP223.config;
+package com.github.rguliamov.PP223.configs;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -15,9 +15,7 @@ public class SpringWebApplicationInitializer extends AbstractAnnotationConfigDis
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{
-                DispatcherServletContextConfig.class
-        };
+        return new Class<?>[]{};
     }
 
     @Override
