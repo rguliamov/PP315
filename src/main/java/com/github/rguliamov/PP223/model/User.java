@@ -1,86 +1,74 @@
 package com.github.rguliamov.PP223.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Guliamov Rustam
  */
 @Entity
+@Data
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
+    @Column(name = "firstname", length = 32, nullable = false)
     private String firstName;
 
+    @Column(name = "lastname", length = 32, nullable = false)
     private String lastName;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "age", nullable = false)
     private int age;
 
-    private String phone;
+    @Column(name = "email")
+    private String email;
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    public User(String firstName, String lastName, String password, int age, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.age = age;
+        this.email = email;
+    }
+
+    @Deprecated
     public User() {
     }
 
-    public User(String firstName, String lastName, int age, String phone) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.phone = phone;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public String getListRoles() {
+        return getRoles().stream()
+                .map(role -> role.getRoleWithoutPrefix())
+                .collect(Collectors.joining(", "));
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

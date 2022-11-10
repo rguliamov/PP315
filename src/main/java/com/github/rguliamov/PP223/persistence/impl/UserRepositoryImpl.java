@@ -8,7 +8,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,13 +27,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void update(User user) {
-        Query query = entityManager.createQuery("update User set firstName = :fname, lastName = :sname," +
-                "age = :age, phone = :phone where id = :i");
+        Query query = entityManager.createQuery("update User set firstName = :fname, lastName = :lname, " +
+                "password = :pass," +
+                "age = :age, email = :email where id = :i");
 
         query.setParameter("fname", user.getFirstName());
-        query.setParameter("sname", user.getLastName());
+        query.setParameter("lname", user.getLastName());
+        query.setParameter("pass", user.getPassword());
         query.setParameter("age", user.getAge());
-        query.setParameter("phone", user.getPhone());
+        query.setParameter("email", user.getEmail());
         query.setParameter("i", user.getId());
 
         query.executeUpdate();
@@ -49,9 +50,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> list() {
+    public List<User> getUsers() {
         TypedQuery<User> query = entityManager.createQuery("select u from User u", User.class);
 
         return query.getResultList();
+    }
+
+    public User getUserByEmail(String email) {
+        TypedQuery<User> query = entityManager.createQuery("select user from User user where user.email = :email", User.class);
+
+        query.setParameter("email", email);
+
+        return query.getResultList().get(0);
     }
 }
