@@ -20,6 +20,15 @@ public class Role {
     @Column(name = "name", length = 32)
     private String name;
 
+    public Role(String name) {
+        this.name = name;
+    }
+
+    @Deprecated
+    public Role() {
+
+    }
+
     public String getRoleWithoutPrefix() {
         return name.split("_")[1];
     }

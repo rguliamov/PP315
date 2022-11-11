@@ -6,7 +6,6 @@ import com.github.rguliamov.PP223.service.RoleService;
 import com.github.rguliamov.PP223.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -18,6 +17,20 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    private RoleService roleService;
+
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @ModelAttribute("users")
     public List<User> getUsers() {
@@ -40,25 +53,9 @@ public class AdminController {
     }
 
     @ModelAttribute("role")
-    public User getRole() {
-        return new User();
+    public Role getRole() {
+        return new Role();
     }
-
-    private UserService userService;
-
-    private RoleService roleService;
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
-    }
-
-
 
     @GetMapping()
     public String getUserList() {
@@ -67,11 +64,10 @@ public class AdminController {
 
     @PostMapping("/create")
     public String doCreateUser(@ModelAttribute("user") User user, @ModelAttribute("role") Role role) {
-        System.out.println(role.getId());
-        System.out.println(user);
-        Role roleById = roleService.getRoleById(role.getId());
 
-        user.getRoles().add(roleById);
+        //user.getRoles().add(roleService.getRoleById(role.getId()));
+
+        user.getRoles().add(role);
 
         userService.save(user);
 
@@ -89,9 +85,9 @@ public class AdminController {
     }
 
     @PostMapping("/delete")
-    public String doDeleteUser(@ModelAttribute User user) {
-        userService.delete(user.getId());
+    public String doDeleteUser(@RequestParam("id") Long id) {
+        userService.delete(id);
 
-        return "redirect:/admin/userpage";
+        return "redirect:/admin";
     }   
 }
