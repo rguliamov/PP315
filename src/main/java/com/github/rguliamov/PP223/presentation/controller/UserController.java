@@ -7,29 +7,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
 /**
  * @author Guliamov Rustam
  */
-@Controller
-@RequestMapping("/user")
+@RestController
+@RequestMapping("user/api")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping()
-    public String getUser(Model model, Principal principal) {
-        User user = userService.getUserByEmail(principal.getName());
-
-        model.addAttribute("user", user);
-
-        return "user/userpage";
+    @GetMapping
+    public User getUser(Principal auth) {
+        return userService.getUserByEmail(auth.getName());
     }
 }

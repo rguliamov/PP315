@@ -5,8 +5,10 @@ import com.github.rguliamov.PP223.model.User;
 import com.github.rguliamov.PP223.service.RoleService;
 import com.github.rguliamov.PP223.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.security.Principal;
 import java.util.List;
@@ -14,80 +16,59 @@ import java.util.List;
 /**
  * @author Guliamov Rustam
  */
-@Controller
-@RequestMapping("/admin")
+@RestController
+@RequestMapping("admin/api")
 public class AdminController {
 
-    private UserService userService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-    }
-
-    private RoleService roleService;
-
-    @Autowired
-    public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
     }
 
-    @ModelAttribute("users")
-    public List<User> getUsers() {
+    @GetMapping
+    public List<User> getAllUsers() {
         return userService.getUsers();
     }
 
-    @ModelAttribute("roles")
-    public List<Role> getRoles() {
-        return roleService.getRoles();
+    @PatchMapping("/edit/{id}")
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody User user, @PathVariable("id") Long id) {
+        userService.update(user);
+
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @ModelAttribute("currentUser")
-    public User getCurrentUser(Principal principal) {
-        return userService.getUserByEmail(principal.getName());
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id) {
+        userService.delete(id);
+
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @ModelAttribute("user")
-    public User getUser() {
-        return new User();
-    }
+    @PostMapping("/new")
+    public ResponseEntity<?> addNewUser(@RequestBody User user) {
 
-    @ModelAttribute("role")
-    public Role getRole() {
-        return new Role();
-    }
+        System.out.println(user.getRoles());
 
-    @GetMapping()
-    public String getUserList() {
-        return "admin/adminpage";
-    }
-
-    @PostMapping("/create")
-    public String doCreateUser(@ModelAttribute("user") User user, @ModelAttribute("role") Role role) {
-
-        //user.getRoles().add(roleService.getRoleById(role.getId()));
-
-        user.getRoles().add(role);
+        if (user.getRoles().isEmpty()) {
+            return new ResponseEntity<Integer>(HttpStatus.OK) ;
+        }
 
         userService.save(user);
 
-        return "redirect:/admin";
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @PostMapping("/update")
-    public String doUpdateUser(@ModelAttribute("user") User user, @ModelAttribute("role") Role role) {
-
-        user.getRoles().add(roleService.getRoleById(role.getId()));
-
-        userService.update(user);
-
-        return "redirect:/admin";
+    @GetMapping("/auth")
+    public User getAuth(Principal principal) {
+        return userService.getUserByEmail(principal.getName());
     }
 
-    @PostMapping("/delete")
-    public String doDeleteUser(@RequestParam("id") Long id) {
-        userService.delete(id);
-
-        return "redirect:/admin";
-    }   
+    @GetMapping("/roles")
+    public List<Role> getRoles() {
+        return roleService.getRoles();
+    }
 }

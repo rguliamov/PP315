@@ -1,7 +1,6 @@
 package com.github.rguliamov.PP223.model;
 
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -56,9 +55,9 @@ public class User {
     public User() {
     }
 
-    public String getListRoles() {
+    public String printRoles() {
         return getRoles().stream()
-                .map(role -> role.getRoleWithoutPrefix())
+                .map(Role::getRoleWithoutPrefix)
                 .collect(Collectors.joining(", "));
     }
 
